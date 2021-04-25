@@ -1,0 +1,9 @@
+{
+	"name": "com.teckartist.colorramp",
+	"displayName":"Color Ramp",
+	"version": "0.0.1",
+	"unity": "2020.3",
+	"description": "Create Color Ramps",
+	"dependencies": {
+	}
+}

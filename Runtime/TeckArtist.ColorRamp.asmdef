@@ -1,0 +1,14 @@
+{
+    "name": "TeckArtist.ColorRamp",
+    "rootNamespace": "TeckArtist.Tools",
+    "references": [],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

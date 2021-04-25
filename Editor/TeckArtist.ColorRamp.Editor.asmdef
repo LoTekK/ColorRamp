@@ -1,0 +1,18 @@
+{
+    "name": "TeckArtist.ColorRamp.Editor",
+    "rootNamespace": "TeckArtist.Tools",
+    "references": [
+        "GUID:c3c539b92e9c7cb40942078a304a3ff6"
+    ],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
