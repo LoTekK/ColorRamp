@@ -1,3 +1,4 @@
+using System.Text.RegularExpressions;
 using System.IO;
 using System.Xml.Serialization;
 using System.Runtime.InteropServices;
@@ -277,6 +278,21 @@ namespace TeckArtist.Tools
                 UpdateTexture(ramp);
                 UpdatePreview(root);
             });
+            var linear = new Toggle("Linear")
+            {
+                value = ramp.isLinear
+            };
+            linear.RegisterValueChangedCallback(e =>
+            {
+                ramp.isLinear = e.newValue;
+                var path = AssetDatabase.GetAssetPath(ramp);
+                var text = File.ReadAllText(path);
+                // m_ColorSpace => sRGB: 0, linear: 1
+                text = Regex.Replace(text, $"m_ColorSpace: {(e.newValue ? 1 : 0)}", $"m_ColorSpace: {(e.newValue ? 0 : 1)}");
+                text = Regex.Replace(text, $"isLinear: {(e.newValue ? 0 : 1)}", $"isLinear: {(e.newValue ? 1 : 0)}");
+                File.WriteAllText(path, text);
+                AssetDatabase.Refresh();
+            });
             var tex = new Image
             {
                 image = ramp.Texture,
@@ -295,6 +311,7 @@ namespace TeckArtist.Tools
             // root.Add(transitionCurve);
             // root.Add(size);
             root.Add(sizeContainer);
+            root.Add(linear);
             root.Add(label);
             root.Add(tex);
             root.Add(refreshButton);

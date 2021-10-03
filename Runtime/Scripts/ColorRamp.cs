@@ -18,6 +18,7 @@ namespace TeckArtist.Tools
         public GradientMode VerticalTransitionMode;
         public Vector2Int Size = new Vector2Int(64, 4);
         public Texture2D Texture;
+        public bool isLinear;
 
         public Color Evaluate(float u, float v)
         {
