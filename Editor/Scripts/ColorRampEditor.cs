@@ -284,6 +284,8 @@ namespace TeckArtist.Tools
             };
             linear.RegisterValueChangedCallback(e =>
             {
+                EditorUtility.SetDirty(ramp);
+                AssetDatabase.SaveAssetIfDirty(ramp);
                 ramp.isLinear = e.newValue;
                 var path = AssetDatabase.GetAssetPath(ramp);
                 var text = File.ReadAllText(path);
