@@ -255,6 +255,12 @@ namespace TeckArtist.Tools
             //     UpdatePreview(root);
             // });
             // size.style.paddingBottom = 8;
+            var gradientType = new EnumField("Gradient Type", ramp.GradientType);
+            gradientType.RegisterValueChangedCallback(e =>
+            {
+                ramp.GradientType = (ColorRamp.GradientTypes)e.newValue;
+                UpdateTexture(ramp);
+            });
             var choices = new List<int>() { 2, 3, 4, 5, 6, 7, 8 };
             var sizeW = new PopupField<int>("Texture Size", choices, choices.IndexOf((int)Mathf.Log(ramp.Texture.width, 2)))
             {
@@ -292,6 +298,7 @@ namespace TeckArtist.Tools
             };
             linear.RegisterValueChangedCallback(e =>
             {
+                UpdateTexture(ramp);
                 EditorUtility.SetDirty(ramp);
                 AssetDatabase.SaveAssetIfDirty(ramp);
                 ramp.isLinear = e.newValue;
@@ -320,6 +327,7 @@ namespace TeckArtist.Tools
             root.Add(transitionContainer);
             // root.Add(transitionCurve);
             // root.Add(size);
+            root.Add(gradientType);
             root.Add(sizeContainer);
             root.Add(linear);
             root.Add(label);
@@ -376,8 +384,24 @@ namespace TeckArtist.Tools
             {
                 for (int x = 0; x < ramp.Texture.width; x++)
                 {
-                    var t0 = (float)x / ramp.Texture.width;
-                    var y0 = ((float)y / ramp.Texture.height);
+                    var t0 = (float)x / (ramp.Texture.width - 1);
+                    var y0 = ((float)y / (ramp.Texture.height - 1));
+                    switch (ramp.GradientType)
+                    {
+                        case ColorRamp.GradientTypes.Horizontal:
+                            break;
+                        case ColorRamp.GradientTypes.Vertical:
+                            (t0, y0) = (y0, t0);
+                            break;
+                        case ColorRamp.GradientTypes.Radial:
+                            t0 = t0 * 2 - 1;
+                            y0 = y0 * 2 - 1;
+                            var r = new Vector2(t0, y0).magnitude;
+                            var theta = Mathf.Atan2(y0, t0) * Mathf.Rad2Deg / 360 + 0.5f;
+                            t0 = r;
+                            y0 = theta;
+                            break;
+                    }
                     switch (ramp.VerticalTransitionMode)
                     {
                         case GradientMode.Blend:

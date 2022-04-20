@@ -12,11 +12,18 @@ namespace TeckArtist.Tools
             public Gradient Gradient;
             public bool Smoothstep;
         }
+        public enum GradientTypes
+        {
+            Horizontal,
+            Vertical,
+            Radial
+        }
         public Ramp[] Ramps;
         public AnimationCurve TransitionCurve;
         public bool NormalizeCurve;
         public GradientMode VerticalTransitionMode;
         public Vector2Int Size = new Vector2Int(64, 4);
+        public GradientTypes GradientType;
         public Texture2D Texture;
         public bool isLinear;
 
