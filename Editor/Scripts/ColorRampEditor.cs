@@ -373,7 +373,7 @@ namespace TeckArtist.Tools
                 maxV = Mathf.NegativeInfinity;
                 for (int y = 0; y < ramp.Texture.height; y++)
                 {
-                    float y0 = (float)y / ramp.Texture.height;
+                    float y0 = (float)y / (ramp.Texture.height - 1);
                     float v = ramp.TransitionCurve.Evaluate(Remap(y0, 0, 1, minT, maxT));
                     minV = Mathf.Min(minV, v);
                     maxV = Mathf.Max(maxV, v);
