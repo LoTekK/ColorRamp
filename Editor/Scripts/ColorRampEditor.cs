@@ -1,15 +1,15 @@
-using System.Text.RegularExpressions;
-using System.IO;
-using System.Xml.Serialization;
-using System.Runtime.InteropServices;
+using System;
 using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
+using System.IO;
+using System.Runtime.InteropServices;
+using System.Text.RegularExpressions;
+using System.Xml.Serialization;
 using UnityEditor;
-using UnityEditorInternal;
 using UnityEditor.UIElements;
+using UnityEditorInternal;
+using UnityEngine;
 using UnityEngine.UIElements;
-using System;
 
 namespace TeckArtist.Tools
 {
@@ -263,7 +263,11 @@ namespace TeckArtist.Tools
             };
             sizeW.RegisterValueChangedCallback(e =>
             {
+#if UNITY_2021_2_OR_NEWER
+                ramp.Texture.Reinitialize((int)Mathf.Pow(2, e.newValue), ramp.Texture.height);
+#else
                 ramp.Texture.Resize((int)Mathf.Pow(2, e.newValue), ramp.Texture.height);
+#endif
                 UpdateTexture(ramp);
                 UpdatePreview(root);
             });
@@ -274,7 +278,11 @@ namespace TeckArtist.Tools
             };
             sizeH.RegisterValueChangedCallback(e =>
             {
+#if UNITY_2021_2_OR_NEWER
+                ramp.Texture.Reinitialize(ramp.Texture.width, (int)Mathf.Pow(2, e.newValue));
+#else
                 ramp.Texture.Resize(ramp.Texture.width, (int)Mathf.Pow(2, e.newValue));
+#endif
                 UpdateTexture(ramp);
                 UpdatePreview(root);
             });
